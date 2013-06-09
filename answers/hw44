@@ -1,0 +1,2 @@
+db.profile.find({ns:/school2/}).sort({millis:-1}).limit(2).pretty();
+15820
