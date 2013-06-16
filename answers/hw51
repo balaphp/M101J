@@ -1,0 +1,48 @@
+db.posts.aggregate([
+	{$project: {
+		"_id":0,
+		"comments": 1
+	}},
+	{$unwind : "$comments"},
+	{$group: {
+		"_id" :"$comments.author",
+		"num_comments": {$sum:1}
+	}},
+	{$sort: {
+		"num_comments": -1
+	}},
+	{$limit: 1}
+]);
+-- 
+
+"result" : [
+        {
+                "_id" : "Elizabet Kleine",
+                "num_comments" : 503
+        }
+]
+-------------------------
+VALIDAÇÃO
+-------------------------
+db.posts.aggregate([
+	{$project: {
+		"_id":0,
+		"comments": 1
+	}},
+	{$unwind : "$comments"},
+	{$group: {
+		"_id" :"$comments.author",
+		"num_comments": {$sum:1}
+	}},
+	{$sort: {
+		"num_comments": 1
+	}},
+	{$limit: 1}
+]);
+
+ "result" : [
+         {
+                 "_id" : "Mariela Sherer",
+                 "num_comments" : 387
+         }
+ ]
